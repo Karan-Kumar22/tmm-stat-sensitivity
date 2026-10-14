@@ -11,11 +11,6 @@ Nevis cluster at the paths listed at the bottom.
 
 ## The chain, directory by directory
 
-### `early_scans/` - first DarkNews sensitivity scans
-Standalone DarkNews scans over (m4, mu_tr) used for the first
-cryostat+dirt rate estimates and the tmm-vs-ncqe comparison. Superseded
-by the grid campaigns but kept for provenance.
-
 ### `generation/` - the MC generation package
 DarkNews interface, MicroBooNE geometry (cryostat tube+caps, liquid
 fill, dirt cone), forced-decay-in-volume machinery, batch bookkeeping
@@ -27,11 +22,13 @@ scattering_regime).
 ### `mapping/` - truth-map reweighting
 Builds the 3D truth map (E_gamma, cos theta, z) per grid point from the
 generated events, with the rate-carrying-cell convergence criterion
-(converge_point.py, binning.py); reweights the isotropic single-photon
-sample to each model point (reweight.py); exports per-point weight
-parquets in NGEM format (export_ngem_grid.py / export_ngem_weights.py).
-Signal definition applied in dataframe_io.apply_signal_definition,
-configured in config.json.
+(converge_point.py, binning.py, merged_binning.py); campaign driver
+run_grid.py; reweights the isotropic single-photon sample to each model
+point (reweight.py); exports per-point weight parquets in NGEM format
+(export_ngem_grid.py / export_ngem_weights.py). Signal definition
+applied in dataframe_io.apply_signal_definition, configured in
+config.json. Only the scripts in the direct chain to the sensitivity
+are archived; study and QA scripts remain on the Nevis cluster.
 
 ### top level - sensitivity
 - `sensitivity_scan.py`: the stat-only scan. Selects test-half
