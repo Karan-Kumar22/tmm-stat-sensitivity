@@ -1,7 +1,9 @@
 # MicroBooNE HNL transition-magnetic-moment single-photon search: analysis code
 
 Code archive of the full analysis chain, from DarkNews event generation
-to the statistical-only sensitivity, plus the systematics machinery.
+to the statistical-only sensitivity.
+Systematic uncertainties are handled separately and are not part of
+this archive.
 Snapshot of the analysis state of 2026-10 (runs 4a-4d NGEM production,
 coherent-everywhere signal definition, shower-energy fit). Code only:
 the data products (grids, dataframes, weight libraries) live on the
@@ -43,19 +45,6 @@ configured in config.json.
   PRD 107 055009 (arXiv:2206.07100) source figures, with the resulting
   npz (MiniBooNE regions, global constraints, MINERvA ME FHC/RHC).
 
-### `systematics/` - covariance machinery (in progress)
-- `build_bkg_covariance.py`: background covariance at the analysis
-  selection from the NGEM universe weights (flux 1000, GENIE 500 + 11
-  unisims, reinteraction 1000, MC stat).
-- `sensitivity_scan_cov.py`: the scan with
-  chi2 = s^T (V_sys + diag(b))^-1 s and per-source staging.
-- `sideband_lowscore.py`: low-BDT-score sideband data/MC comparison
-  with the covariance band and CNP goodness of fit (open data).
-- `flux_systematics.py`, `score_detvar_bdt.py`: signal-side flux and
-  detvar scoring (in progress).
-- `study_covariance.py`: pedagogical from-scratch rebuild of the flux
-  covariance with checkpoints against the production matrices.
-
 ## Analysis configuration (frozen for the stat-only result)
 
 - Signal: HNL coherent upscattering (cryostat and dirt), 992-point
@@ -73,12 +62,9 @@ configured in config.json.
 
 - Selected background at cut 0.96, 6.8e20: 3818 test-half events,
   24.2 expected (23.3 inside the 0-2 GeV binning).
-- Flagship point chi2 (stat-only) = 126.0; with reweightable
-  systematics = 60.2.
+- Flagship point chi2 (stat-only) = 126.0.
 - 95% CL crossing at 487 MeV: mu = 1.00e-6 (stat), 1.32e-6 (+syst).
 - Last excluded mass: 827 MeV. MiniBooNE best fit excluded.
-- Flux covariance: max per-bin fraction 0.37; GENIE 0.649;
-  reinteraction 0.179.
 
 ## Data dependencies (Nevis paths, not in this repository)
 
@@ -87,9 +73,6 @@ configured in config.json.
   presel_df_train_vars.parquet (NGEM production 2026-05-23)
 - BDT scores: ~fk2476/uboone_ngem/training_outputs/tmm_with_new_files/
 - Signal weight library (993 parquets): tmm_mapping/ngem_weights_v3_cohall/
-- Universe weights: /nevis/riverside/data/sanderson/ngem/
-  intermediate_files/presel_weights_df.parquet
-- Covariances: tmm_mapping/systematics/bkg_cov_*.npz
 - Scan CSVs and figures: tmm_mapping/ and tmm_mapping/slides/
 - The NGEM framework (Lee Hagaman): github.com/leehagaman/uboone_ngem
 
